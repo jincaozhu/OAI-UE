@@ -107,7 +107,7 @@ def connectmyOAI_DS(node, sim):
 
     # Create link from node to OAI dataset rw clone
     node_if = node.addInterface("mydsif_%s" % node.name)
-    bslink = request.Link("dslink_%s" % node.name)
+    bslink = request.Link("mydslink_%s" % node.name)
     bslink.addInterface(node_if)
     bslink.addInterface(mybs.interface)
     bslink.vlan_tagging = True
