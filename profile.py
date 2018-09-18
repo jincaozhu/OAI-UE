@@ -98,18 +98,18 @@ def connectOAI_DS(node, sim):
 	
 def connectmyOAI_DS(node, sim):
     # Create remote read-write clone dataset object bound to OAI dataset
-    bs = request.RemoteBlockstore("ds-%s" % node.name, "/opt/myoai")
+    mybs = request.RemoteBlockstore("myds-%s" % node.name, "/opt/myoai")
     if sim == 1:
-	bs.dataset = GLOBALS.OAI_SIM_DS
+	mybs.dataset = GLOBALS.OAI_SIM_DS
     else:
-	bs.dataset = GLOBALS.MYOAI_DS
+	mybs.dataset = GLOBALS.MYOAI_DS
     #bs.rwclone = True
 
     # Create link from node to OAI dataset rw clone
-    node_if = node.addInterface("dsif_%s" % node.name)
+    node_if = node.addInterface("mydsif_%s" % node.name)
     bslink = request.Link("dslink_%s" % node.name)
     bslink.addInterface(node_if)
-    bslink.addInterface(bs.interface)
+    bslink.addInterface(mybs.interface)
     bslink.vlan_tagging = True
     bslink.best_effort = True	
 
