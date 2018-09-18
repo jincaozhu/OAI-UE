@@ -67,6 +67,7 @@ import geni.rspec.emulab.pnext as PN
 #
 class GLOBALS(object):
     OAI_DS = "urn:publicid:IDN+emulab.net:phantomnet+ltdataset+oai-develop"
+    MYOAI_DS="urn:publicid:IDN+emulab.net:powdersandbox+ltdataset+OAI"
     OAI_SIM_DS = "urn:publicid:IDN+emulab.net:phantomnet+dataset+PhantomNet:oai"
     UE_IMG  = URN.Image(PN.PNDEFS.PNET_AM, "PhantomNet:ANDROID444-STD")
     ADB_IMG = URN.Image(PN.PNDEFS.PNET_AM, "PhantomNet:UBUNTU14-64-PNTOOLS")
@@ -94,6 +95,23 @@ def connectOAI_DS(node, sim):
     bslink.addInterface(bs.interface)
     bslink.vlan_tagging = True
     bslink.best_effort = True
+	
+def connectmyOAI_DS(node, sim):
+    # Create remote read-write clone dataset object bound to OAI dataset
+    bs = request.RemoteBlockstore("ds-%s" % node.name, "/opt/myoai")
+    if sim == 1:
+	bs.dataset = GLOBALS.OAI_SIM_DS
+    else:
+	bs.dataset = GLOBALS.MYOAI_DS
+    #bs.rwclone = True
+
+    # Create link from node to OAI dataset rw clone
+    node_if = node.addInterface("dsif_%s" % node.name)
+    bslink = request.Link("dslink_%s" % node.name)
+    bslink.addInterface(node_if)
+    bslink.addInterface(bs.interface)
+    bslink.vlan_tagging = True
+    bslink.best_effort = True	
 
 #
 # This geni-lib script is designed to run in the PhantomNet Portal.
@@ -154,7 +172,7 @@ else:
     enb1.hardware_type = GLOBALS.NUC_HWTYPE
     enb1.disk_image = GLOBALS.OAI_ENB_IMG
     enb1.Desire( "rf-radiated" if params.TYPE == "ota" else "rf-controlled", 1 )
-    connectOAI_DS(enb1, 0)
+    connectmyOAI_DS(enb1, 0)
     enb1.addService(rspec.Execute(shell="sh", command=GLOBALS.OAI_CONF_SCRIPT + " -r ENB"))
     enb1_rue1_rf = enb1.addInterface("rue1_rf")
 
@@ -166,6 +184,7 @@ else:
     rue1.disk_image = GLOBALS.OAI_ENB_IMG
     rue1.Desire( "rf-radiated" if params.TYPE == "ota" else "rf-controlled", 1 )
     connectOAI_DS(rue1, 0)
+    connectmyOAI_DS(rue1, 0)
     enb1.addService(rspec.Execute(shell="sh", command=GLOBALS.OAI_CONF_SCRIPT + " -r UE"))
     rue1_enb1_rf = rue1.addInterface("enb1_rf")
 
