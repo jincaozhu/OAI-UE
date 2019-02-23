@@ -148,7 +148,7 @@ else:
     #adb_t.disk_image = GLOBALS.ADB_IMG
 
     # Add a NUC eNB node.
-    enb1 = request.RawPC("enb1", component_id='nuc12')
+    enb1 = request.RawPC("enb1")
     if params.FIXED_ENB:
         enb1.component_id = params.FIXED_ENB
     enb1.hardware_type = GLOBALS.NUC_HWTYPE
