@@ -159,7 +159,7 @@ else:
     #enb1_rue1_rf = enb1.addInterface("rue1_rf")
 
     # Add an OTS (Nexus 5) UE
-    rue1 = request.RawPC("rue1", component_id='nuc14')
+    rue1 = request.RawPC("rue1")
     if params.FIXED_UE:
         rue1.component_id = params.FIXED_UE
     rue1.hardware_type = GLOBALS.NUC_HWTYPE
