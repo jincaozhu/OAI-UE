@@ -158,16 +158,16 @@ else:
     enb1.addService(rspec.Execute(shell="sh", command=GLOBALS.OAI_CONF_SCRIPT + " -r ENB"))
     #enb1_rue1_rf = enb1.addInterface("rue1_rf")
 
-    # Add an OTS (Nexus 5) UE
-    rue1 = request.RawPC("rue1")
-    if params.FIXED_UE:
-        rue1.component_id = params.FIXED_UE
-    rue1.hardware_type = GLOBALS.NUC_HWTYPE
-    rue1.disk_image = GLOBALS.OAI_ENB_IMG
-    #rue1.Desire( "rf-radiated" if params.TYPE == "ota" else "rf-controlled", 1 )
-    connectOAI_DS(rue1, 0)
-    enb1.addService(rspec.Execute(shell="sh", command=GLOBALS.OAI_CONF_SCRIPT + " -r UE"))
-    #rue1_enb1_rf = rue1.addInterface("enb1_rf")
+    ## Add an OTS (Nexus 5) UE
+    #rue1 = request.RawPC("rue1")
+    #if params.FIXED_UE:
+    #    rue1.component_id = params.FIXED_UE
+    #rue1.hardware_type = GLOBALS.NUC_HWTYPE
+    #rue1.disk_image = GLOBALS.OAI_ENB_IMG
+    ##rue1.Desire( "rf-radiated" if params.TYPE == "ota" else "rf-controlled", 1 )
+    #connectOAI_DS(rue1, 0)
+    #enb1.addService(rspec.Execute(shell="sh", command=GLOBALS.OAI_CONF_SCRIPT + " -r UE"))
+    ##rue1_enb1_rf = rue1.addInterface("enb1_rf")
 
     # Create the RF link between the Nexus 5 UE and eNodeB
     #rflink2 = request.RFLink("rflink2")
